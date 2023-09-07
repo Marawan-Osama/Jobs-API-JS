@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const jobRoutes = require('./routes/jobs');
 const authRoutes = require('./routes/auth');
+const authenticateUser = require('./middleware/authentication');
 
 
 // error handler
@@ -17,8 +18,8 @@ app.use(express.json());
 const connectDB = require('./db/connect');
 
 // routes
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/jobs', jobRoutes);
+app.use('/api/v1/auth',authRoutes);
+app.use('/api/v1/jobs',authenticateUser ,jobRoutes);
 
 app.get('/', (req, res) => {
   res.send('jobs api');

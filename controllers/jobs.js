@@ -9,7 +9,7 @@ const getJob = async (req, res) => {
 }
 
 const createJob = async (req, res) => {
-    res.send('Create a Job')
+    res.send({userID: req.user.userID, name: req.user.name})
 }
 
 
