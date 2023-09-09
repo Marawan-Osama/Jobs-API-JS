@@ -5,6 +5,11 @@ const app = express();
 const jobRoutes = require('./routes/jobs');
 const authRoutes = require('./routes/auth');
 const authenticateUser = require('./middleware/authentication');
+//additional security to be added here
+const helmet = require('helmet')
+const cors = require('cors')
+const rateLimit = require('express-rate-limit')
+const mongoSanitize = require('express-mongo-sanitize')
 
 
 // error handler
@@ -20,6 +25,15 @@ const connectDB = require('./db/connect');
 // routes
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/jobs',authenticateUser ,jobRoutes);
+
+//security middleware
+app.use(helmet())
+app.use(cors())
+app.use(mongoSanitize())
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 mins
+    max: 100 // limit each IP to 100 requests per windowMs
+  })
 
 app.get('/', (req, res) => {
   res.send('jobs api');

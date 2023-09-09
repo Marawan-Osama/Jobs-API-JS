@@ -4,7 +4,6 @@ const {BadRequestError} = require('../errors')
 const {UnauthenticatedError} = require('../errors')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-//additional security to be added here
 
 const auth = async (req, res, next) => {
 
